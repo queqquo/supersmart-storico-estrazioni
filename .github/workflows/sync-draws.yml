@@ -1,0 +1,39 @@
+name: Auto-Sync Storico Estrazioni (SuperEnalotto & Win for Life)
+
+on:
+  schedule:
+    # Ogni sera alle 21:15 UTC (22:15 CET / 23:15 CEST) dopo le estrazioni delle 20:00
+    - cron: '15 21 * * *'
+    # Controllo notturno di recupero alle 02:15 UTC
+    - cron: '15 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-draws:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout external archive repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Sincronizza estrazioni SuperEnalotto e Win for Life / Win for Italia
+        run: node scripts/sync-draws.mjs
+
+      - name: Commit e Push su main se presenti nuove estrazioni
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain data/superenalotto.json data/winforitalia.json)" ]]; then
+            git add data/superenalotto.json data/winforitalia.json
+            git commit -m "chore(data): auto-sync estrazioni SuperEnalotto e Win for Life"
+            git push origin main
+          else
+            echo "Nessuna nuova estrazione da salvare."
+          fi
