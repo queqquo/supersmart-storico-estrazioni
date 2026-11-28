@@ -1,11 +1,26 @@
 {
   "game": "Win for Italia Team / Win for Life (6/40)",
   "source": "external-github-archive",
-  "exportedAt": "2026-11-27T10:54:10.023Z",
-  "count": 60,
-  "latestDate": "2026-11-26",
+  "exportedAt": "2026-11-28T03:19:48.870Z",
+  "count": 61,
+  "latestDate": "2026-11-27",
   "oldestDate": "2026-09-28",
   "draws": [
+    {
+      "id": "WFI-2026-061",
+      "contestNumber": 61,
+      "year": 2026,
+      "date": "2026-11-27",
+      "time": "20:00",
+      "numbers": [
+        17,
+        20,
+        31,
+        34,
+        35,
+        37
+      ]
+    },
     {
       "id": "WFI-2026-060",
       "contestNumber": 60,
